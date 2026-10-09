@@ -3,315 +3,197 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudTask v1.2</title>
+  <title>CloudTask v1.0</title>
  
   <style>
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
- 
-    body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
-      color: #f8fafc;
-    }
- 
-    .app {
-      width: 100%;
-      max-width: 920px;
-      background: #1e293b;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,.5);
-      overflow: hidden;
-    }
- 
-    .header {
-      background: linear-gradient(135deg, #059669, #10b981);
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
- 
-    .header h1 {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
- 
-    .header p {
-      opacity: 0.9;
-    }
- 
-    .version {
-      display: inline-block;
-      margin-top: 12px;
-      background: rgba(0,0,0,.2);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-    }
- 
-    .content {
-      padding: 28px;
-    }
- 
-    .input-group {
-      display: grid;
-      grid-template-columns: 1fr 150px 160px 110px;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
- 
-    input, select {
-      padding: 13px;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      font-size: 15px;
-      background: #0f172a;
-      color: #f8fafc;
-    }
-
-    input::placeholder {
-      color: #94a3b8;
-    }
-    
-    /* Configurar el icono del calendario a claro en type date */
-    ::-webkit-calendar-picker-indicator {
-        filter: invert(1);
-    }
- 
-    #addTaskBtn {
-      border: none;
-      border-radius: 10px;
-      background: #10b981;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    #addTaskBtn:hover {
-      background: #059669;
-    }
- 
-    .control-panel {
-      display: grid;
-      grid-template-columns: 1fr 180px;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
- 
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
- 
-    .filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
- 
-    .filter-btn {
-      border: none;
-      background: #334155;
-      color: #cbd5e1;
-      padding: 9px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
- 
-    .filter-btn.active {
-      background: #10b981;
-      color: white;
-    }
- 
-    .clear-btn {
-      border: none;
-      background: #7f1d1d;
-      color: #fca5a5;
-      padding: 9px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .clear-btn:hover {
-      background: #991b1b;
-      color: white;
-    }
- 
-    .task-list {
-      list-style: none;
-    }
- 
-    .task {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      background: #334155;
-      border: 1px solid #475569;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      border-radius: 12px;
-    }
- 
-    .task.overdue {
-      border-left: 5px solid #ef4444;
-    }
- 
-    .task-left {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
- 
-    .task-info {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
- 
-    .task.completed .task-text {
-      text-decoration: line-through;
-      color: #64748b;
-    }
- 
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 12px;
-    }
- 
-    .priority,
-    .date-badge,
-    .overdue-badge {
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-weight: bold;
-    }
- 
-    .priority-baja {
-      background: #064e3b;
-      color: #34d399;
-    }
- 
-    .priority-media {
-      background: #78350f;
-      color: #fbbf24;
-    }
- 
-    .priority-alta {
-      background: #7f1d1d;
-      color: #fca5a5;
-    }
- 
-    .date-badge {
-      background: #1e3a8a;
-      color: #93c5fd;
-    }
- 
-    .overdue-badge {
-      background: #7f1d1d;
-      color: #fca5a5;
-    }
- 
-    .actions {
-      display: flex;
-      gap: 8px;
-    }
- 
-    .edit-btn,
-    .delete-btn {
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
- 
-    .edit-btn {
-      background: #1e3a8a;
-      color: #93c5fd;
-    }
-
-    .edit-btn:hover {
-      background: #1e40af;
-      color: white;
-    }
- 
-    .delete-btn {
-      background: #7f1d1d;
-      color: #fca5a5;
-    }
-
-    .delete-btn:hover {
-      background: #991b1b;
-      color: white;
-    }
- 
-    .summary {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
- 
-    .summary-card {
-      background: #0f172a;
-      color: #38bdf8;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #334155;
-      text-align: center;
-    }
- 
-    .summary-card strong {
-      display: block;
-      font-size: 24px;
-      margin-top: 4px;
-    }
- 
-    .empty {
-      text-align: center;
-      color: #64748b;
-      padding: 25px;
-    }
- 
-    footer {
-      border-top: 1px solid #334155;
-      padding: 18px;
-      text-align: center;
-      color: #94a3b8;
-      font-size: 13px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
- 
-    @media(max-width:800px) {
-      .input-group,
-      .control-panel,
-      .summary {
-        grid-template-columns: 1fr;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
- 
+
+      body {
+        /* Fondo oscuro tecnológico */
+        background: linear-gradient(135deg, #0f172a, #1e293b); 
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        color: #f8fafc;
+      }
+
+      .app {
+        width: 100%;
+        max-width: 760px;
+        background: #1e293b;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+      }
+
+      .header {
+        /* Degradado en tonos esmeralda */
+        background: linear-gradient(135deg, #059669, #10b981);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .header p {
+        opacity: 0.9;
+      }
+
+      .version {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        background: rgba(0,0,0,.2);
+        font-weight: bold;
+      }
+
+      .content {
+        padding: 28px;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        padding: 14px;
+        border: 1px solid #334155;
+        background: #0f172a;
+        color: #f8fafc;
+        border-radius: 10px;
+        font-size: 16px;
+      }
+
+      input[type="text"]::placeholder {
+        color: #94a3b8;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      #addTaskBtn {
+        border: none;
+        border-radius: 10px;
+        background: #10b981;
+        color: white;
+        padding: 14px 20px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      #addTaskBtn:hover {
+        background: #059669;
+      }
+
+      .filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        border: none;
+        background: #334155;
+        color: #cbd5e1;
+        padding: 9px 15px;
+        border-radius: 20px;
+        transition: all 0.3s;
+      }
+
+      .filter-btn.active {
+        background: #10b981;
+        color: white;
+      }
+
+      .task-list {
+        list-style: none;
+      }
+
       .task {
-        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        background: #334155;
+        border: 1px solid #475569;
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin-bottom: 10px;
       }
-    }
+
+      .task-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .task.completed .task-text {
+        text-decoration: line-through;
+        color: #64748b;
+      }
+
+      .delete-btn {
+        border: none;
+        background: #7f1d1d;
+        color: #fca5a5;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: background 0.3s;
+      }
+
+      .delete-btn:hover {
+        background: #991b1b;
+        color: white;
+      }
+
+      .summary {
+        margin-top: 22px;
+        background: #0f172a;
+        color: #38bdf8;
+        padding: 14px;
+        border-radius: 10px;
+        border: 1px solid #334155;
+      }
+
+      .empty {
+        text-align: center;
+        color: #64748b;
+        padding: 25px;
+      }
+
+      footer {
+        text-align: center;
+        border-top: 1px solid #334155;
+        padding: 18px;
+        color: #94a3b8;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      @media (max-width: 600px) {
+        .input-group {
+          flex-direction: column;
+        }
+      }
   </style>
 </head>
  
@@ -322,233 +204,70 @@
   <div class="header">
     <h1>☁ CloudTask</h1>
     <p>Gestor de tareas interactivo</p>
-    <span class="version">Versión 1.2</span>
+    <span class="version">Versión 1.0</span>
   </div>
  
   <div class="content">
  
     <div class="input-group">
- 
-      <input
-        id="taskInput"
-        type="text"
-        placeholder="Escribe una nueva tarea..."
-      >
- 
-      <select id="prioritySelect">
-        <option value="baja">Prioridad baja</option>
-        <option value="media" selected>Prioridad media</option>
-        <option value="alta">Prioridad alta</option>
-      </select>
- 
-      <input id="dueDateInput" type="date">
- 
-      <button id="addTaskBtn">
-        Agregar
-      </button>
- 
+      <input id="taskInput" type="text" placeholder="Escribe una nueva tarea...">
+      <button id="addTaskBtn">Agregar</button>
     </div>
  
-    <div class="control-panel">
- 
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Buscar tareas..."
-      >
- 
-      <select id="sortSelect">
-        <option value="default">Orden original</option>
-        <option value="priority">Por prioridad</option>
-        <option value="date">Por fecha límite</option>
-      </select>
- 
-    </div>
- 
-    <div class="toolbar">
- 
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">Todas</button>
-        <button class="filter-btn" data-filter="pending">Pendientes</button>
-        <button class="filter-btn" data-filter="completed">Completadas</button>
-      </div>
- 
-      <button id="clearCompletedBtn" class="clear-btn">
-        Eliminar completadas
-      </button>
- 
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="pending">Pendientes</button>
+      <button class="filter-btn" data-filter="completed">Completadas</button>
     </div>
  
     <ul id="taskList" class="task-list"></ul>
  
     <div class="summary">
- 
-      <div class="summary-card">
-        Total
-        <strong id="totalCount">0</strong>
-      </div>
- 
-      <div class="summary-card">
-        Pendientes
-        <strong id="pendingCount">0</strong>
-      </div>
- 
-      <div class="summary-card">
-        Vencidas
-        <strong id="overdueCount">0</strong>
-      </div>
- 
+      Tareas pendientes:
+      <strong id="pendingCount">0</strong>
     </div>
  
   </div>
  
   <footer>
-    <span>CloudTask v1.2 · GitHub + Vercel / Netlify</span>
-    <span>Desarrollado por: David Nicolas Perero Macias</span>
+    CloudTask v1.0 · Práctica de Computación en la Nube
+  </footer>
+  <footer>
+    David Nicolas Perero Macias
   </footer>
  
 </div>
  
 <script>
   const taskInput = document.getElementById("taskInput");
-  const prioritySelect =
-    document.getElementById("prioritySelect");
-  const dueDateInput =
-    document.getElementById("dueDateInput");
-  const addTaskBtn =
-    document.getElementById("addTaskBtn");
- 
-  const taskList =
-    document.getElementById("taskList");
- 
-  const totalCount =
-    document.getElementById("totalCount");
-  const pendingCount =
-    document.getElementById("pendingCount");
-  const overdueCount =
-    document.getElementById("overdueCount");
- 
-  const filterButtons =
-    document.querySelectorAll(".filter-btn");
- 
-  const clearCompletedBtn =
-    document.getElementById("clearCompletedBtn");
- 
-  const searchInput =
-    document.getElementById("searchInput");
- 
-  const sortSelect =
-    document.getElementById("sortSelect");
+  const addTaskBtn = document.getElementById("addTaskBtn");
+  const taskList = document.getElementById("taskList");
+  const pendingCount = document.getElementById("pendingCount");
+  const filterButtons = document.querySelectorAll(".filter-btn");
  
   let currentFilter = "all";
-  let editingId = null;
  
-  let tasks =
-    JSON.parse(localStorage.getItem("cloudTaskTasks"));
- 
-  if (!tasks) {
-    tasks = [
-      {
-        id: 1,
-        text: "Subir proyecto a GitHub",
-        completed: false,
-        priority: "alta",
-        dueDate: ""
-      },
-      {
-        id: 2,
-        text: "Desplegar aplicación en Vercel",
-        completed: false,
-        priority: "media",
-        dueDate: ""
-      },
-      {
-        id: 3,
-        text: "Probar aplicación desde el teléfono",
-        completed: true,
-        priority: "baja",
-        dueDate: ""
-      }
-    ];
-  }
- 
-  function saveTasks() {
-    localStorage.setItem(
-      "cloudTaskTasks",
-      JSON.stringify(tasks)
-    );
-  }
- 
-  function isOverdue(task) {
-    if (!task.dueDate || task.completed) {
-      return false;
-    }
- 
-    const today = new Date();
-    today.setHours(0,0,0,0);
- 
-    const due =
-      new Date(task.dueDate + "T00:00:00");
- 
-    return due < today;
-  }
+  let tasks = [
+    { id: 1, text: "Subir proyecto a GitHub", completed: false },
+    { id: 2, text: "Desplegar aplicación en Vercel", completed: false },
+    { id: 3, text: "Probar aplicación desde el teléfono", completed: true }
+  ];
  
   function renderTasks() {
     taskList.innerHTML = "";
  
-    let visibleTasks = [...tasks];
+    const filteredTasks = tasks.filter(task => {
+      if (currentFilter === "pending") return !task.completed;
+      if (currentFilter === "completed") return task.completed;
+      return true;
+    });
  
-    if (currentFilter === "pending") {
-      visibleTasks =
-        visibleTasks.filter(task => !task.completed);
-    }
- 
-    if (currentFilter === "completed") {
-      visibleTasks =
-        visibleTasks.filter(task => task.completed);
-    }
- 
-    const searchText =
-      searchInput.value.toLowerCase().trim();
- 
-    if (searchText) {
-      visibleTasks =
-        visibleTasks.filter(task =>
-          task.text.toLowerCase().includes(searchText)
-        );
-    }
- 
-    if (sortSelect.value === "priority") {
-      const order = {
-        alta: 1,
-        media: 2,
-        baja: 3
-      };
- 
-      visibleTasks.sort(
-        (a,b) =>
-          order[a.priority] - order[b.priority]
-      );
-    }
- 
-    if (sortSelect.value === "date") {
-      visibleTasks.sort((a,b) => {
-        if (!a.dueDate) return 1;
-        if (!b.dueDate) return -1;
- 
-        return (
-          new Date(a.dueDate) -
-          new Date(b.dueDate)
-        );
-      });
-    }
- 
-    if (visibleTasks.length === 0) {
+    if (filteredTasks.length === 0) {
       taskList.innerHTML =
         '<li class="empty">No hay tareas para mostrar</li>';
     }
  
-    visibleTasks.forEach(task => {
+    filteredTasks.forEach(task => {
       const li = document.createElement("li");
  
       li.className = "task";
@@ -557,155 +276,56 @@
         li.classList.add("completed");
       }
  
-      if (isOverdue(task)) {
-        li.classList.add("overdue");
-      }
- 
-      const priorityText = {
-        baja: "Baja",
-        media: "Media",
-        alta: "Alta"
-      };
- 
-      const dateHtml = task.dueDate
-        ? `<span class="date-badge">
-             Fecha: ${task.dueDate}
-           </span>`
-        : "";
- 
-      const overdueHtml = isOverdue(task)
-        ? `<span class="overdue-badge">
-             Vencida
-           </span>`
-        : "";
- 
       li.innerHTML = `
- 
         <div class="task-left">
- 
           <input
             type="checkbox"
             ${task.completed ? "checked" : ""}
             onchange="toggleTask(${task.id})"
           >
  
-          <div class="task-info">
- 
-            <span class="task-text">
-              ${task.text}
-            </span>
- 
-            <div class="meta">
- 
-              <span class="priority priority-${task.priority}">
-                Prioridad ${priorityText[task.priority]}
-              </span>
- 
-              ${dateHtml}
- 
-              ${overdueHtml}
- 
-            </div>
- 
-          </div>
- 
+          <span class="task-text">
+            ${task.text}
+          </span>
         </div>
  
-        <div class="actions">
- 
-          <button
-            class="edit-btn"
-            onclick="editTask(${task.id})"
-          >
-            Editar
-          </button>
- 
-          <button
-            class="delete-btn"
-            onclick="deleteTask(${task.id})"
-          >
-            Eliminar
-          </button>
- 
-        </div>
+        <button
+          class="delete-btn"
+          onclick="deleteTask(${task.id})"
+        >
+          Eliminar
+        </button>
       `;
  
       taskList.appendChild(li);
     });
  
-    updateCounters();
-    saveTasks();
+    updatePendingCount();
   }
  
-  function addOrUpdateTask() {
+  function addTask() {
     const text = taskInput.value.trim();
  
-    if (!text) {
+    if (text === "") {
       alert("Escribe una tarea.");
       return;
     }
  
-    const priority =
-      prioritySelect.value;
- 
-    const dueDate =
-      dueDateInput.value;
- 
-    if (editingId !== null) {
-      tasks = tasks.map(task =>
-        task.id === editingId
-          ? {
-              ...task,
-              text,
-              priority,
-              dueDate
-            }
-          : task
-      );
- 
-      editingId = null;
-      addTaskBtn.textContent = "Agregar";
- 
-    } else {
-      tasks.push({
-        id: Date.now(),
-        text,
-        completed: false,
-        priority,
-        dueDate
-      });
-    }
+    tasks.push({
+      id: Date.now(),
+      text,
+      completed: false
+    });
  
     taskInput.value = "";
-    prioritySelect.value = "media";
-    dueDateInput.value = "";
  
     renderTasks();
-  }
- 
-  function editTask(id) {
-    const task =
-      tasks.find(task => task.id === id);
- 
-    if (!task) return;
- 
-    taskInput.value = task.text;
-    prioritySelect.value = task.priority;
-    dueDateInput.value = task.dueDate || "";
- 
-    editingId = id;
- 
-    addTaskBtn.textContent = "Guardar";
-    taskInput.focus();
   }
  
   function toggleTask(id) {
     tasks = tasks.map(task =>
       task.id === id
-        ? {
-            ...task,
-            completed: !task.completed
-          }
+        ? { ...task, completed: !task.completed }
         : task
     );
  
@@ -713,81 +333,32 @@
   }
  
   function deleteTask(id) {
-    tasks =
-      tasks.filter(task => task.id !== id);
- 
+    tasks = tasks.filter(task => task.id !== id);
     renderTasks();
   }
  
-  function clearCompletedTasks() {
-    if (
-      confirm(
-        "¿Eliminar todas las tareas completadas?"
-      )
-    ) {
-      tasks =
-        tasks.filter(task => !task.completed);
- 
-      renderTasks();
-    }
-  }
- 
-  function updateCounters() {
-    totalCount.textContent =
-      tasks.length;
- 
+  function updatePendingCount() {
     pendingCount.textContent =
-      tasks.filter(
-        task => !task.completed
-      ).length;
- 
-    overdueCount.textContent =
-      tasks.filter(isOverdue).length;
+      tasks.filter(task => !task.completed).length;
   }
  
-  addTaskBtn.addEventListener(
-    "click",
-    addOrUpdateTask
-  );
+  addTaskBtn.addEventListener("click", addTask);
  
-  taskInput.addEventListener(
-    "keypress",
-    event => {
-      if (event.key === "Enter") {
-        addOrUpdateTask();
-      }
-    }
-  );
- 
-  clearCompletedBtn.addEventListener(
-    "click",
-    clearCompletedTasks
-  );
- 
-  searchInput.addEventListener(
-    "input",
-    renderTasks
-  );
- 
-  sortSelect.addEventListener(
-    "change",
-    renderTasks
-  );
+  taskInput.addEventListener("keypress", event => {
+    if (event.key === "Enter") addTask();
+  });
  
   filterButtons.forEach(button => {
-    button.addEventListener(
-      "click",
-      function() {
-        filterButtons.forEach(btn =>
-          btn.classList.remove("active")
-        );
+    button.addEventListener("click", function() {
+      filterButtons.forEach(btn =>
+        btn.classList.remove("active")
+      );
  
-        this.classList.add("active");
-        currentFilter = this.dataset.filter;
+      this.classList.add("active");
+      currentFilter = this.dataset.filter;
  
-        renderTasks();
-      }
-    );
+      renderTasks();
+    });
   });
  
   renderTasks();
