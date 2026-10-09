@@ -3,197 +3,258 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudTask v1.0</title>
+  <title>CloudTask v1.1</title>
  
   <style>
     * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+ 
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b); 
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      color: #f8fafc;
+    }
+ 
+    .app {
+      width: 100%;
+      max-width: 820px;
+      background: #1e293b;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+ 
+    .header {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+ 
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+ 
+    .header p {
+      opacity: 0.9;
+    }
+ 
+    .version {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 12px;
+      background: rgba(0,0,0,.2);
+      border-radius: 20px;
+      font-weight: bold;
+    }
+ 
+    .content {
+      padding: 28px;
+    }
+ 
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr 160px 120px;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+ 
+    input, select {
+      padding: 14px;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      font-size: 15px;
+      background: #0f172a;
+      color: #f8fafc;
+    }
 
-      body {
-        /* Fondo oscuro tecnológico */
-        background: linear-gradient(135deg, #0f172a, #1e293b); 
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 30px;
-        color: #f8fafc;
-      }
+    input::placeholder {
+      color: #94a3b8;
+    }
+ 
+    #addTaskBtn {
+      border: none;
+      background: #10b981;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-      .app {
-        width: 100%;
-        max-width: 760px;
-        background: #1e293b;
-        border-radius: 20px;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-        overflow: hidden;
-      }
+    #addTaskBtn:hover {
+      background: #059669;
+    }
+ 
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+ 
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+ 
+    .filter-btn {
+      border: none;
+      background: #334155;
+      color: #cbd5e1;
+      padding: 9px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+ 
+    .filter-btn.active {
+      background: #10b981;
+      color: white;
+    }
+ 
+    .clear-btn {
+      border: none;
+      background: #7f1d1d;
+      color: #fca5a5;
+      padding: 9px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-      .header {
-        /* Degradado en tonos esmeralda */
-        background: linear-gradient(135deg, #059669, #10b981);
-        color: white;
-        padding: 30px;
-        text-align: center;
-      }
+    .clear-btn:hover {
+      background: #991b1b;
+      color: white;
+    }
+ 
+    .task-list {
+      list-style: none;
+    }
+ 
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #334155;
+      border: 1px solid #475569;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+ 
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+ 
+    .task-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+ 
+    .task.completed .task-text {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+ 
+    .priority {
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+ 
+    .priority-baja {
+      background: #064e3b;
+      color: #34d399;
+    }
+ 
+    .priority-media {
+      background: #78350f;
+      color: #fbbf24;
+    }
+ 
+    .priority-alta {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+ 
+    .delete-btn {
+      border: none;
+      background: #7f1d1d;
+      color: #fca5a5;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-      .header h1 {
-        font-size: 32px;
-        margin-bottom: 8px;
-      }
-
-      .header p {
-        opacity: 0.9;
-      }
-
-      .version {
-        display: inline-block;
-        margin-top: 12px;
-        padding: 6px 12px;
-        border-radius: 20px;
-        background: rgba(0,0,0,.2);
-        font-weight: bold;
-      }
-
-      .content {
-        padding: 28px;
-      }
-
-      .input-group {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 24px;
-      }
-
-      input[type="text"] {
-        flex: 1;
-        padding: 14px;
-        border: 1px solid #334155;
-        background: #0f172a;
-        color: #f8fafc;
-        border-radius: 10px;
-        font-size: 16px;
-      }
-
-      input[type="text"]::placeholder {
-        color: #94a3b8;
-      }
-
-      button {
-        cursor: pointer;
-      }
-
-      #addTaskBtn {
-        border: none;
-        border-radius: 10px;
-        background: #10b981;
-        color: white;
-        padding: 14px 20px;
-        font-weight: bold;
-        transition: background 0.3s;
-      }
-
-      #addTaskBtn:hover {
-        background: #059669;
-      }
-
-      .filters {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-      }
-
-      .filter-btn {
-        border: none;
-        background: #334155;
-        color: #cbd5e1;
-        padding: 9px 15px;
-        border-radius: 20px;
-        transition: all 0.3s;
-      }
-
-      .filter-btn.active {
-        background: #10b981;
-        color: white;
-      }
-
-      .task-list {
-        list-style: none;
-      }
-
-      .task {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        background: #334155;
-        border: 1px solid #475569;
-        border-radius: 12px;
-        padding: 14px 16px;
-        margin-bottom: 10px;
-      }
-
-      .task-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .task.completed .task-text {
-        text-decoration: line-through;
-        color: #64748b;
-      }
-
-      .delete-btn {
-        border: none;
-        background: #7f1d1d;
-        color: #fca5a5;
-        padding: 8px 12px;
-        border-radius: 8px;
-        transition: background 0.3s;
-      }
-
-      .delete-btn:hover {
-        background: #991b1b;
-        color: white;
-      }
-
+    .delete-btn:hover {
+      background: #991b1b;
+      color: white;
+    }
+ 
+    .summary {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+ 
+    .summary-card {
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      text-align: center;
+    }
+ 
+    .summary-card strong {
+      display: block;
+      font-size: 24px;
+      margin-top: 5px;
+    }
+ 
+    .empty {
+      text-align: center;
+      color: #64748b;
+      padding: 25px;
+    }
+ 
+    footer {
+      border-top: 1px solid #334155;
+      text-align: center;
+      padding: 18px;
+      color: #94a3b8;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+ 
+    @media(max-width:700px) {
+      .input-group,
       .summary {
-        margin-top: 22px;
-        background: #0f172a;
-        color: #38bdf8;
-        padding: 14px;
-        border-radius: 10px;
-        border: 1px solid #334155;
+        grid-template-columns: 1fr;
       }
-
-      .empty {
-        text-align: center;
-        color: #64748b;
-        padding: 25px;
-      }
-
-      footer {
-        text-align: center;
-        border-top: 1px solid #334155;
-        padding: 18px;
-        color: #94a3b8;
-        font-size: 13px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
-
-      @media (max-width: 600px) {
-        .input-group {
-          flex-direction: column;
-        }
-      }
+    }
   </style>
 </head>
  
@@ -204,54 +265,113 @@
   <div class="header">
     <h1>☁ CloudTask</h1>
     <p>Gestor de tareas interactivo</p>
-    <span class="version">Versión 1.0</span>
+    <span class="version">Versión 1.1</span>
   </div>
  
   <div class="content">
  
     <div class="input-group">
-      <input id="taskInput" type="text" placeholder="Escribe una nueva tarea...">
+ 
+      <input
+        id="taskInput"
+        type="text"
+        placeholder="Escribe una nueva tarea..."
+      >
+ 
+      <select id="prioritySelect">
+        <option value="baja">Prioridad baja</option>
+        <option value="media" selected>Prioridad media</option>
+        <option value="alta">Prioridad alta</option>
+      </select>
+ 
       <button id="addTaskBtn">Agregar</button>
+ 
     </div>
  
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">Todas</button>
-      <button class="filter-btn" data-filter="pending">Pendientes</button>
-      <button class="filter-btn" data-filter="completed">Completadas</button>
+    <div class="toolbar">
+ 
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="pending">Pendientes</button>
+        <button class="filter-btn" data-filter="completed">Completadas</button>
+      </div>
+ 
+      <button id="clearCompletedBtn" class="clear-btn">
+        Eliminar completadas
+      </button>
+ 
     </div>
  
     <ul id="taskList" class="task-list"></ul>
  
     <div class="summary">
-      Tareas pendientes:
-      <strong id="pendingCount">0</strong>
+ 
+      <div class="summary-card">
+        Total de tareas
+        <strong id="totalCount">0</strong>
+      </div>
+ 
+      <div class="summary-card">
+        Tareas pendientes
+        <strong id="pendingCount">0</strong>
+      </div>
+ 
     </div>
  
   </div>
  
   <footer>
-    CloudTask v1.0 · Práctica de Computación en la Nube
-  </footer>
-  <footer>
-    David Nicolas Perero Macias
+    <span>CloudTask v1.1 · GitHub + Vercel / Netlify</span>
+    <span>Desarrollado por: David Nicolas Perero Macias</span>
   </footer>
  
 </div>
  
 <script>
   const taskInput = document.getElementById("taskInput");
+  const prioritySelect = document.getElementById("prioritySelect");
   const addTaskBtn = document.getElementById("addTaskBtn");
   const taskList = document.getElementById("taskList");
   const pendingCount = document.getElementById("pendingCount");
+  const totalCount = document.getElementById("totalCount");
   const filterButtons = document.querySelectorAll(".filter-btn");
+  const clearCompletedBtn =
+    document.getElementById("clearCompletedBtn");
  
   let currentFilter = "all";
  
-  let tasks = [
-    { id: 1, text: "Subir proyecto a GitHub", completed: false },
-    { id: 2, text: "Desplegar aplicación en Vercel", completed: false },
-    { id: 3, text: "Probar aplicación desde el teléfono", completed: true }
-  ];
+  let tasks =
+    JSON.parse(localStorage.getItem("cloudTaskTasks"));
+ 
+  if (!tasks) {
+    tasks = [
+      {
+        id: 1,
+        text: "Subir proyecto a GitHub",
+        completed: false,
+        priority: "alta"
+      },
+      {
+        id: 2,
+        text: "Desplegar aplicación en Vercel",
+        completed: false,
+        priority: "media"
+      },
+      {
+        id: 3,
+        text: "Probar aplicación desde el teléfono",
+        completed: true,
+        priority: "baja"
+      }
+    ];
+  }
+ 
+  function saveTasks() {
+    localStorage.setItem(
+      "cloudTaskTasks",
+      JSON.stringify(tasks)
+    );
+  }
  
   function renderTasks() {
     taskList.innerHTML = "";
@@ -268,8 +388,13 @@
     }
  
     filteredTasks.forEach(task => {
-      const li = document.createElement("li");
+      const priorityText = {
+        baja: "Baja",
+        media: "Media",
+        alta: "Alta"
+      };
  
+      const li = document.createElement("li");
       li.className = "task";
  
       if (task.completed) {
@@ -278,15 +403,25 @@
  
       li.innerHTML = `
         <div class="task-left">
+ 
           <input
             type="checkbox"
             ${task.completed ? "checked" : ""}
             onchange="toggleTask(${task.id})"
           >
  
-          <span class="task-text">
-            ${task.text}
-          </span>
+          <div class="task-info">
+ 
+            <span class="task-text">
+              ${task.text}
+            </span>
+ 
+            <span class="priority priority-${task.priority}">
+              Prioridad ${priorityText[task.priority]}
+            </span>
+ 
+          </div>
+ 
         </div>
  
         <button
@@ -300,13 +435,14 @@
       taskList.appendChild(li);
     });
  
-    updatePendingCount();
+    updateCounters();
+    saveTasks();
   }
  
   function addTask() {
     const text = taskInput.value.trim();
  
-    if (text === "") {
+    if (!text) {
       alert("Escribe una tarea.");
       return;
     }
@@ -314,10 +450,12 @@
     tasks.push({
       id: Date.now(),
       text,
-      completed: false
+      completed: false,
+      priority: prioritySelect.value
     });
  
     taskInput.value = "";
+    prioritySelect.value = "media";
  
     renderTasks();
   }
@@ -337,7 +475,21 @@
     renderTasks();
   }
  
-  function updatePendingCount() {
+  function clearCompletedTasks() {
+    if (!tasks.some(task => task.completed)) {
+      alert("No hay tareas completadas.");
+      return;
+    }
+ 
+    if (confirm("¿Eliminar todas las tareas completadas?")) {
+      tasks = tasks.filter(task => !task.completed);
+      renderTasks();
+    }
+  }
+ 
+  function updateCounters() {
+    totalCount.textContent = tasks.length;
+ 
     pendingCount.textContent =
       tasks.filter(task => !task.completed).length;
   }
@@ -347,6 +499,11 @@
   taskInput.addEventListener("keypress", event => {
     if (event.key === "Enter") addTask();
   });
+ 
+  clearCompletedBtn.addEventListener(
+    "click",
+    clearCompletedTasks
+  );
  
   filterButtons.forEach(button => {
     button.addEventListener("click", function() {
